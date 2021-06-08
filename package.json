@@ -1,6 +1,6 @@
 {
   "name": "vue-virtualized",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "vue virtualized render",
   "files": [
     "dist"
@@ -29,6 +29,14 @@
     "url": "https://github.com/junqiuzhang/vue-virtualized/issues"
   },
   "homepage": "https://github.com/junqiuzhang/vue-virtualized#readme",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "virtual",
+    "list",
+    "scrolling",
+    "virtualized"
+  ],
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vitejs/plugin-vue-jsx": "^1.1.5",

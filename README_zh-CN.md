@@ -1,9 +1,9 @@
 # vue-virtualized
 
-vue-virtualized is a virtual rendering library like react-window.
+vue-virtualized 是一个虚拟化渲染的库，类似于react-window
 
-## Install
 
+## 安装
 ```
 # Yarn
 yarn add vue-virtualized
@@ -12,15 +12,15 @@ yarn add vue-virtualized
 npm install --save vue-virtualized
 ```
 
-## Usage
-Usage is similar to react-window, there are some differentia:
+## 使用
+用法类似于 react-window，下面是几个不同点：
 
-1. vue-virtualized only support vue3, using jsx grammar.
-2. vue-virtualized only support virtualize list, not support virtualize table.
-3. vue-virtualized use renderItem function to render list items.
-4. vue-virtualized use renderCount to determine if list updates are needed.
+1. vue-virtualized 只支持 vue3，使用 jsx 语法
+2. vue-virtualized 只支持虚拟化一维列表，不支持虚拟化二维列表
+3. vue-virtualized 使用 renderItem 函数渲染列表
+4. vue-virtualized 使用 renderCount 来判断是否需要重新计算高度并渲染列表
 
-### example
+### 例子
 
 ```tsx
 import List from "vue-virtualized";
@@ -41,5 +41,5 @@ import List from "vue-virtualized";
 />;
 ```
 
-## License
+## 开源协议
 ISC
