@@ -60,7 +60,6 @@ const VueVirtualized = defineComponent({
     return () => {
       if (props.renderCount !== renderCount.value) {
         calculateItemsTop();
-      } else {
         renderCount.value = props.renderCount;
       }
       return (
