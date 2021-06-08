@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
+import throttle from "lodash.throttle";
 const DefaultStyle = {
   position: "absolute",
 };
@@ -70,7 +71,7 @@ const VueVirtualized = defineComponent({
             height: `${props.height}px`,
             overflow: "auto",
           }}
-          onScroll={calculateItemsTop}
+          onScroll={throttle(calculateItemsTop, 10)}
         >
           <div
             style={{
