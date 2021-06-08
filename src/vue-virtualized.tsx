@@ -63,7 +63,6 @@ const VueVirtualized = defineComponent({
       }
       return (
         <div
-          class="vue-window"
           ref={listRef}
           style={{
             width: `${props.width}px`,
@@ -73,7 +72,6 @@ const VueVirtualized = defineComponent({
           onScroll={calculateItemsTop}
         >
           <div
-            class="vue-window-list"
             style={{
               position: "relative",
               height: `${itemsTop.value[itemsTop.value.length - 1]}px`,

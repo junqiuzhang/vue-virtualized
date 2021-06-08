@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/junqiuzhang/vue-window.git"
+    "url": "git+https://github.com/junqiuzhang/vue-virtualized.git"
   },
   "author": "junqiuzhang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/junqiuzhang/vue-window/issues"
+    "url": "https://github.com/junqiuzhang/vue-virtualized/issues"
   },
-  "homepage": "https://github.com/junqiuzhang/vue-window#readme",
+  "homepage": "https://github.com/junqiuzhang/vue-virtualized#readme",
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vitejs/plugin-vue-jsx": "^1.1.5",
