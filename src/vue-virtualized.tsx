@@ -2,7 +2,7 @@ import { defineComponent, PropType, ref } from "vue";
 const DefaultStyle = {
   position: "absolute",
 };
-const VueWindow = defineComponent({
+const VueVirtualized = defineComponent({
   props: {
     width: Number,
     height: Number,
@@ -86,4 +86,4 @@ const VueWindow = defineComponent({
     };
   },
 });
-export default VueWindow;
+export default VueVirtualized;

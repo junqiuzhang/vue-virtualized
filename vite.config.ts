@@ -7,8 +7,8 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/vue-window.tsx"),
-      name: "vue-window",
+      entry: path.resolve(__dirname, "src/vue-virtualized.tsx"),
+      name: "vue-virtualized",
     },
     rollupOptions: {
       // 请确保外部化那些你的库中不需要的依赖

@@ -1,16 +1,16 @@
 {
-  "name": "vue-window",
+  "name": "vue-virtualized",
   "version": "1.0.0",
   "description": "vue virtualized render",
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-window.umd.js",
-  "module": "./dist/vue-window.es.js",
+  "main": "./dist/vue-virtualized.umd.js",
+  "module": "./dist/vue-virtualized.es.js",
   "exports": {
     ".": {
-      "import": "./dist/vue-window.es.js",
-      "require": "./dist/vue-window.umd.js"
+      "import": "./dist/vue-virtualized.es.js",
+      "require": "./dist/vue-virtualized.umd.js"
     }
   },
   "type": "module",
