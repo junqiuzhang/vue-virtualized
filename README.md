@@ -1,4 +1,5 @@
 # vue-virtualized
+[中文文档](https://github.com/junqiuzhang/vue-virtualized/blob/master/README_zh-CN.md)
 
 vue-virtualized is a virtual rendering library like react-window.
 
@@ -28,12 +29,13 @@ import List from "vue-virtualized";
 <List
   height={400}
   width={600}
-  itemCount={props.dataSource.length} // Used to traverse a list, usually the length of the data source
+  itemCount={props.dataSource.length} // Used to traverse a list, usually the length of the data source, numbers or functions can be passed
   itemSize={(index) => {
-    // used to get the height of a list item
+    // used to get the height of a list item, numbers or functions can be passed
     return 100;
   }}
-  reRenderItem={0} // if your change list item‘s height, you must change this value
+  reRenderCount={1} // if your change list item‘s height, you must change this value
+  preRenderPageNumber={1} // number of pre-rendered pages, the larger the number, the more list items will be pre-rendered
   renderItem={({ index, style }) => {
     // used to render list items
     const data = props.dataSource[index];
@@ -50,8 +52,9 @@ interface IProps {
   height: number;
   itemCount: number | (() => number);
   itemSize: number | ((index: number) => number);
-  reRenderItem: number;
   renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
+  reRenderCount?: number;
+  preRenderPageNumber?: number;
 }
 ```
 

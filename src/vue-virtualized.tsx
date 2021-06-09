@@ -4,27 +4,61 @@ const DefaultStyle = {
 };
 const VueVirtualized = defineComponent({
   props: {
-    width: Number,
-    height: Number,
-    itemCount: Number as PropType<number | (() => number)>,
-    itemSize: Number as PropType<number | ((index: number) => number)>,
-    reRenderItem: Number,
-    renderItem: Function as PropType<
-      (params: { index: number; style: any }) => JSX.Element
-    >,
+    width: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+    itemCount: {
+      type: Object as PropType<number | (() => number)>,
+      required: true,
+    },
+    itemSize: {
+      type: Object as PropType<number | ((i: number) => number)>,
+      required: true,
+    },
+    renderItem: {
+      type: Function as PropType<
+        (params: { index: number; style: any }) => JSX.Element
+      >,
+      required: true,
+    },
+    reRenderCount: {
+      type: Number,
+      required: false,
+      default: 1,
+    },
+    preRenderPageNumber: {
+      type: Number,
+      required: false,
+      default: 1,
+    },
   },
   setup(props) {
     const listRef = ref<Element | null>(null);
     const itemsTop = ref<number[]>([]);
     const listTop = { value: 0 };
-    const throttleDiff = props.height ?? 1;
-    const renderItems = () => {
-      let itemCount = 0;
+    const getItemCount = () => {
       if (typeof props.itemCount === "function") {
-        itemCount = props.itemCount();
+        return props.itemCount();
       } else if (typeof props.itemCount === "number") {
-        itemCount = props.itemCount;
+        return props.itemCount;
       }
+      return 0;
+    };
+    const getItemSize = (i: number) => {
+      if (typeof props.itemSize === "function") {
+        return props.itemSize(i);
+      } else if (typeof props.itemSize === "number") {
+        return props.itemSize;
+      }
+      return 0;
+    };
+    const renderItems = () => {
+      const itemCount = getItemCount();
       const items = [];
       if (!listRef.value) {
         return [];
@@ -32,13 +66,15 @@ const VueVirtualized = defineComponent({
       if (!props.renderItem) {
         return [];
       }
+      const pageBottom =
+        listRef.value.scrollTop +
+        (1 + props.preRenderPageNumber) * props.height;
+      const pageTop =
+        listRef.value.scrollTop - props.preRenderPageNumber * props.height;
       for (let i = 0; i < itemCount; i++) {
         const curTop = itemsTop.value[i];
-        const curHeight = itemsTop.value[i + 1] - itemsTop.value[i];
-        if (
-          curTop < listRef.value.scrollTop + 2 * props.height! &&
-          curTop + curHeight > listRef.value.scrollTop - props.height!
-        ) {
+        const curBottom = itemsTop.value[i + 1];
+        if (curTop < pageBottom && curBottom > pageTop) {
           items.push(
             props.renderItem({
               index: i,
@@ -50,20 +86,11 @@ const VueVirtualized = defineComponent({
       return items;
     };
     const calculateItemsTop = () => {
-      let itemCount = 0;
-      if (typeof props.itemCount === "function") {
-        itemCount = props.itemCount();
-      } else if (typeof props.itemCount === "number") {
-        itemCount = props.itemCount;
-      }
+      const itemCount = getItemCount();
       const items = [0];
       let top = 0;
       for (let i = 0; i < itemCount; i++) {
-        if (typeof props.itemSize === "function") {
-          top += props.itemSize(i);
-        } else if (typeof props.itemSize === "number") {
-          top += props.itemSize;
-        }
+        top += getItemSize(i);
         items.push(top);
       }
       itemsTop.value = items;
@@ -72,12 +99,13 @@ const VueVirtualized = defineComponent({
       const curListTop = listRef.value?.scrollTop ?? 0;
       const prevListTop = listTop.value;
       const diff = curListTop - prevListTop;
-      if (diff < throttleDiff && diff > -throttleDiff) return;
+      const maxDiff = props.height;
+      if (diff < maxDiff && diff > -maxDiff) return;
       listTop.value = curListTop;
       calculateItemsTop();
     };
     watch(
-      () => props.reRenderItem,
+      () => props.reRenderCount,
       () => {
         calculateItemsTop();
       }
