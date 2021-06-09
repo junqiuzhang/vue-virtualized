@@ -42,6 +42,19 @@ import List from "vue-virtualized";
 />;
 ```
 
+### 接口
+
+```ts
+interface IProps {
+  width: number;
+  height: number;
+  itemCount: number | (() => number);
+  itemSize: number | ((index: number) => number);
+  reRenderItem: number;
+  renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
+}
+```
+
 ## 开源协议
 
 ISC

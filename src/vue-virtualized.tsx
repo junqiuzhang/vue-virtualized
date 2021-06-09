@@ -6,8 +6,8 @@ const VueVirtualized = defineComponent({
   props: {
     width: Number,
     height: Number,
-    itemCount: Number,
-    itemSize: Function as PropType<(index: number) => number>,
+    itemCount: Number as PropType<number | (() => number)>,
+    itemSize: Number as PropType<number | ((index: number) => number)>,
     reRenderItem: Number,
     renderItem: Function as PropType<
       (params: { index: number; style: any }) => JSX.Element
@@ -19,7 +19,12 @@ const VueVirtualized = defineComponent({
     const listTop = { value: 0 };
     const throttleDiff = props.height ?? 1;
     const renderItems = () => {
-      const itemCount = props.itemCount || 0;
+      let itemCount = 0;
+      if (typeof props.itemCount === "function") {
+        itemCount = props.itemCount();
+      } else if (typeof props.itemCount === "number") {
+        itemCount = props.itemCount;
+      }
       const items = [];
       if (!listRef.value) {
         return [];
@@ -45,7 +50,12 @@ const VueVirtualized = defineComponent({
       return items;
     };
     const calculateItemsTop = () => {
-      const itemCount = props.itemCount || 0;
+      let itemCount = 0;
+      if (typeof props.itemCount === "function") {
+        itemCount = props.itemCount();
+      } else if (typeof props.itemCount === "number") {
+        itemCount = props.itemCount;
+      }
       const items = [0];
       let top = 0;
       for (let i = 0; i < itemCount; i++) {

@@ -1,6 +1,6 @@
 {
   "name": "vue-virtualized",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "vue virtualized render",
   "files": [
     "dist"
@@ -14,6 +14,7 @@
     }
   },
   "type": "module",
+  "types": "./dist/vue-virtualized.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
