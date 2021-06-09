@@ -1,6 +1,6 @@
 {
   "name": "vue-virtualized",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "vue virtualized render",
   "files": [
     "dist"
@@ -34,12 +34,11 @@
     "vue",
     "vuejs",
     "virtual",
+    "virtualized",
     "list",
-    "scrolling",
-    "virtualized"
+    "scrolling"
   ],
   "devDependencies": {
-    "@types/lodash.throttle": "^4.1.6",
     "@vitejs/plugin-vue": "^1.2.3",
     "@vitejs/plugin-vue-jsx": "^1.1.5",
     "typescript": "^4.3.2",
