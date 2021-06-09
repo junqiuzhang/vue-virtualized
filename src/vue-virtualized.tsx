@@ -1,5 +1,4 @@
-import { defineComponent, PropType, ref } from "vue";
-import throttle from "lodash.throttle";
+import { defineComponent, PropType, ref, watch } from "vue";
 const DefaultStyle = {
   position: "absolute",
 };
@@ -9,15 +8,16 @@ const VueVirtualized = defineComponent({
     height: Number,
     itemCount: Number,
     itemSize: Function as PropType<(index: number) => number>,
-    renderCount: Number,
+    reRenderItem: Number,
     renderItem: Function as PropType<
       (params: { index: number; style: any }) => JSX.Element
     >,
   },
-  setup(props, context) {
+  setup(props) {
     const listRef = ref<Element | null>(null);
     const itemsTop = ref<number[]>([]);
-    const renderCount = ref<number>();
+    const listTop = { value: 0 };
+    const throttleDiff = props.height ?? 1;
     const renderItems = () => {
       const itemCount = props.itemCount || 0;
       const items = [];
@@ -28,16 +28,16 @@ const VueVirtualized = defineComponent({
         return [];
       }
       for (let i = 0; i < itemCount; i++) {
-        const currentTop = itemsTop.value[i];
-        const currentHeight = itemsTop.value[i + 1] - itemsTop.value[i];
+        const curTop = itemsTop.value[i];
+        const curHeight = itemsTop.value[i + 1] - itemsTop.value[i];
         if (
-          currentTop < listRef.value.scrollTop + 2 * props.height! &&
-          currentTop + currentHeight > listRef.value.scrollTop - props.height!
+          curTop < listRef.value.scrollTop + 2 * props.height! &&
+          curTop + curHeight > listRef.value.scrollTop - props.height!
         ) {
           items.push(
             props.renderItem({
               index: i,
-              style: { ...DefaultStyle, top: `${currentTop}px` },
+              style: { ...DefaultStyle, top: `${curTop}px` },
             })
           );
         }
@@ -58,11 +58,22 @@ const VueVirtualized = defineComponent({
       }
       itemsTop.value = items;
     };
-    return () => {
-      if (props.renderCount !== renderCount.value) {
+    const handleScroll = () => {
+      const curListTop = listRef.value?.scrollTop ?? 0;
+      const prevListTop = listTop.value;
+      const diff = curListTop - prevListTop;
+      if (diff < throttleDiff && diff > -throttleDiff) return;
+      listTop.value = curListTop;
+      calculateItemsTop();
+    };
+    watch(
+      () => props.reRenderItem,
+      () => {
         calculateItemsTop();
-        renderCount.value = props.renderCount;
       }
+    );
+    calculateItemsTop();
+    return () => {
       return (
         <div
           ref={listRef}
@@ -71,7 +82,7 @@ const VueVirtualized = defineComponent({
             height: `${props.height}px`,
             overflow: "auto",
           }}
-          onScroll={throttle(calculateItemsTop, 10)}
+          onScroll={handleScroll}
         >
           <div
             style={{

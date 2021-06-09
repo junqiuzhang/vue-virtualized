@@ -13,6 +13,7 @@ npm install --save vue-virtualized
 ```
 
 ## Usage
+
 Usage is similar to react-window, there are some differentia:
 
 1. vue-virtualized only support vue3, using jsx grammar.
@@ -32,7 +33,7 @@ import List from "vue-virtualized";
     // used to get the height of a list item
     return 100;
   }}
-  renderCount={0} // if your change list item‘s height, you must change this value
+  reRenderItem={0} // if your change list item‘s height, you must change this value
   renderItem={({ index, style }) => {
     // used to render list items
     const data = props.dataSource[index];
@@ -42,4 +43,5 @@ import List from "vue-virtualized";
 ```
 
 ## License
+
 ISC

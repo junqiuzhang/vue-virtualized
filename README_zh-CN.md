@@ -1,9 +1,9 @@
 # vue-virtualized
 
-vue-virtualized 是一个虚拟化渲染的库，类似于react-window
-
+vue-virtualized 是一个虚拟化渲染的库，类似于 react-window
 
 ## 安装
+
 ```
 # Yarn
 yarn add vue-virtualized
@@ -13,6 +13,7 @@ npm install --save vue-virtualized
 ```
 
 ## 使用
+
 用法类似于 react-window，下面是几个不同点：
 
 1. vue-virtualized 只支持 vue3，使用 jsx 语法
@@ -27,14 +28,14 @@ import List from "vue-virtualized";
 <List
   height={400}
   width={600}
-  itemCount={props.dataSource.length} // Used to traverse a list, usually the length of the data source
+  itemCount={props.dataSource.length} // 用于遍历列表，通常是数据源长度
   itemSize={(index) => {
-    // used to get the height of a list item
+    // 用于获取列表项高度
     return 100;
   }}
-  renderCount={0} // if your change list item‘s height, you must change this value
+  reRenderItem={0} // 重新渲染的标记，内部会监听这个标记，如果标记改变，那么会重新渲染列表，所以如果列表项高度改变，那么必须改变这个值
   renderItem={({ index, style }) => {
-    // used to render list items
+    // 用于渲染列表项
     const data = props.dataSource[index];
     return <div style={style}>{data}</div>;
   }}
@@ -42,4 +43,5 @@ import List from "vue-virtualized";
 ```
 
 ## 开源协议
+
 ISC
