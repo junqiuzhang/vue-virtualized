@@ -34,7 +34,7 @@ import List from "vue-virtualized";
     return 100;
   }}
   reRenderCount={1} // 重新渲染的标记，内部会监听这个标记，如果标记改变，那么会重新渲染列表，所以如果列表项高度改变，那么必须改变这个值
-  preRenderPageNumber={1} // 预渲染的页数，数字越大，预渲染的列表项就越多
+  preRenderPageCount={1} // 预渲染的页数，数字越大，预渲染的列表项就越多
   renderItem={({ index, style }) => {
     // 用于渲染列表项
     const data = props.dataSource[index];
@@ -53,7 +53,7 @@ interface IProps {
   itemSize: number | ((index: number) => number);
   renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
   reRenderCount?: number;
-  preRenderPageNumber?: number;
+  preRenderPageCount?: number;
 }
 ```
 

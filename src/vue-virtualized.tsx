@@ -31,7 +31,7 @@ const VueVirtualized = defineComponent({
       required: false,
       default: 1,
     },
-    preRenderPageNumber: {
+    preRenderPageCount: {
       type: Number,
       required: false,
       default: 1,
@@ -68,9 +68,9 @@ const VueVirtualized = defineComponent({
       }
       const pageBottom =
         listRef.value.scrollTop +
-        (1 + props.preRenderPageNumber) * props.height;
+        (1 + props.preRenderPageCount) * props.height;
       const pageTop =
-        listRef.value.scrollTop - props.preRenderPageNumber * props.height;
+        listRef.value.scrollTop - props.preRenderPageCount * props.height;
       for (let i = 0; i < itemCount; i++) {
         const curTop = itemsTop.value[i];
         const curBottom = itemsTop.value[i + 1];

@@ -35,7 +35,7 @@ import List from "vue-virtualized";
     return 100;
   }}
   reRenderCount={1} // if your change list item‘s height, you must change this value
-  preRenderPageNumber={1} // number of pre-rendered pages, the larger the number, the more list items will be pre-rendered
+  preRenderPageCount={1} // number of pre-rendered pages, the larger the number, the more list items will be pre-rendered
   renderItem={({ index, style }) => {
     // used to render list items
     const data = props.dataSource[index];
@@ -54,7 +54,7 @@ interface IProps {
   itemSize: number | ((index: number) => number);
   renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
   reRenderCount?: number;
-  preRenderPageNumber?: number;
+  preRenderPageCount?: number;
 }
 ```
 
