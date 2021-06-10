@@ -1,12 +1,17 @@
-import { PropType } from "vue";
+import { PropType, VNodeTypes } from "vue";
+/**
+ * vue-virtualized is a virtual rendering library like react-window.
+ */
 declare const VueVirtualized: import("vue").DefineComponent<{
     width: {
         type: NumberConstructor;
         required: true;
+        default: number;
     };
     height: {
         type: NumberConstructor;
         required: true;
+        default: number;
     };
     itemCount: {
         type: NumberConstructor;
@@ -14,16 +19,17 @@ declare const VueVirtualized: import("vue").DefineComponent<{
         default: number;
     };
     itemSize: {
-        type: PropType<(i: number) => number>;
+        type: PropType<number | ((i: number) => number)>;
         required: true;
-        default: () => number;
+        default: number;
     };
     renderItem: {
         type: PropType<(params: {
             index: number;
             style: any;
-        }) => JSX.Element>;
+        }) => VNodeTypes>;
         required: true;
+        default: () => JSX.Element;
     };
     reRenderCount: {
         type: NumberConstructor;
@@ -39,16 +45,22 @@ declare const VueVirtualized: import("vue").DefineComponent<{
     width: number;
     height: number;
     itemCount: number;
-    itemSize: (i: number) => number;
+    itemSize: number | ((i: number) => number);
     renderItem: (params: {
         index: number;
         style: any;
-    }) => JSX.Element;
+    }) => VNodeTypes;
     reRenderCount: number;
     preRenderPageCount: number;
 } & {}>, {
+    width: number;
+    height: number;
     itemCount: number;
-    itemSize: (i: number) => number;
+    itemSize: number | ((i: number) => number);
+    renderItem: (params: {
+        index: number;
+        style: any;
+    }) => VNodeTypes;
     reRenderCount: number;
     preRenderPageCount: number;
 }>;

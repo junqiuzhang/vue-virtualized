@@ -1,16 +1,21 @@
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, VNodeTypes, ref, watch } from "vue";
 const DefaultStyle = {
   position: "absolute",
 };
+/**
+ * vue-virtualized is a virtual rendering library like react-window.
+ */
 const VueVirtualized = defineComponent({
   props: {
     width: {
       type: Number,
       required: true,
+      default: 0,
     },
     height: {
       type: Number,
       required: true,
+      default: 0,
     },
     itemCount: {
       type: Number,
@@ -18,15 +23,16 @@ const VueVirtualized = defineComponent({
       default: 0,
     },
     itemSize: {
-      type: Function as PropType<(i: number) => number>,
+      type: [Number, Function] as PropType<number | ((i: number) => number)>,
       required: true,
-      default: () => 0,
+      default: 0,
     },
     renderItem: {
       type: Function as PropType<
-        (params: { index: number; style: any }) => JSX.Element
+        (params: { index: number; style: any }) => VNodeTypes
       >,
       required: true,
+      default: () => <></>,
     },
     reRenderCount: {
       type: Number,
@@ -72,7 +78,11 @@ const VueVirtualized = defineComponent({
       const items = [0];
       let top = 0;
       for (let i = 0; i < itemCount; i++) {
-        top += props.itemSize(i);
+        if (typeof props.itemSize === "number") {
+          top += props.itemSize;
+        } else if (typeof props.itemSize === "function") {
+          top += props.itemSize(i);
+        }
         items.push(top);
       }
       itemsTop.value = items;
