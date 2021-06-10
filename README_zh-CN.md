@@ -19,7 +19,8 @@ npm install --save vue-virtualized
 1. vue-virtualized 只支持 vue3，使用 jsx 语法
 2. vue-virtualized 只支持虚拟化一维列表，不支持虚拟化二维列表
 3. vue-virtualized 使用 renderItem 函数渲染列表
-4. vue-virtualized 使用 renderCount 来判断是否需要重新计算高度并渲染列表
+4. vue-virtualized 使用 reRenderCount 来判断是否需要重新计算高度并渲染列表
+5. vue-virtualized 使用 preRenderPageCount 来控制预渲染的页数
 
 ### 例子
 
@@ -49,8 +50,8 @@ import List from "vue-virtualized";
 interface IProps {
   width: number;
   height: number;
-  itemCount: number | (() => number);
-  itemSize: number | ((index: number) => number);
+  itemCount: number;
+  itemSize: (index: number) => number;
   renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
   reRenderCount?: number;
   preRenderPageCount?: number;

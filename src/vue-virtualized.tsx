@@ -13,12 +13,14 @@ const VueVirtualized = defineComponent({
       required: true,
     },
     itemCount: {
-      type: Object as PropType<number | (() => number)>,
+      type: Number,
       required: true,
+      default: 0,
     },
     itemSize: {
-      type: Object as PropType<number | ((i: number) => number)>,
+      type: Function as PropType<(i: number) => number>,
       required: true,
+      default: () => 0,
     },
     renderItem: {
       type: Function as PropType<
@@ -38,39 +40,17 @@ const VueVirtualized = defineComponent({
     },
   },
   setup(props) {
-    const listRef = ref<Element | null>(null);
+    const listTop = ref<number>(0);
     const itemsTop = ref<number[]>([]);
-    const listTop = { value: 0 };
-    const getItemCount = () => {
-      if (typeof props.itemCount === "function") {
-        return props.itemCount();
-      } else if (typeof props.itemCount === "number") {
-        return props.itemCount;
-      }
-      return 0;
-    };
-    const getItemSize = (i: number) => {
-      if (typeof props.itemSize === "function") {
-        return props.itemSize(i);
-      } else if (typeof props.itemSize === "number") {
-        return props.itemSize;
-      }
-      return 0;
-    };
-    const renderItems = () => {
-      const itemCount = getItemCount();
+    const renderItems = (scrollTop: number) => {
+      const itemCount = props.itemCount;
       const items = [];
-      if (!listRef.value) {
-        return [];
-      }
       if (!props.renderItem) {
         return [];
       }
       const pageBottom =
-        listRef.value.scrollTop +
-        (1 + props.preRenderPageCount) * props.height;
-      const pageTop =
-        listRef.value.scrollTop - props.preRenderPageCount * props.height;
+        scrollTop + (1 + props.preRenderPageCount) * props.height;
+      const pageTop = scrollTop - props.preRenderPageCount * props.height;
       for (let i = 0; i < itemCount; i++) {
         const curTop = itemsTop.value[i];
         const curBottom = itemsTop.value[i + 1];
@@ -81,28 +61,30 @@ const VueVirtualized = defineComponent({
               style: { ...DefaultStyle, top: `${curTop}px` },
             })
           );
+        } else if (items.length > 0) {
+          break;
         }
       }
       return items;
     };
     const calculateItemsTop = () => {
-      const itemCount = getItemCount();
+      const itemCount = props.itemCount;
       const items = [0];
       let top = 0;
       for (let i = 0; i < itemCount; i++) {
-        top += getItemSize(i);
+        top += props.itemSize(i);
         items.push(top);
       }
       itemsTop.value = items;
     };
-    const handleScroll = () => {
-      const curListTop = listRef.value?.scrollTop ?? 0;
+    const handleScroll = (e: UIEvent) => {
+      /// @ts-ignore
+      const curListTop = e.target?.scrollTop ?? 0;
       const prevListTop = listTop.value;
       const diff = curListTop - prevListTop;
-      const maxDiff = props.height;
+      const maxDiff = props.height / 2;
       if (diff < maxDiff && diff > -maxDiff) return;
       listTop.value = curListTop;
-      calculateItemsTop();
     };
     watch(
       () => props.reRenderCount,
@@ -114,7 +96,6 @@ const VueVirtualized = defineComponent({
     return () => {
       return (
         <div
-          ref={listRef}
           style={{
             width: `${props.width}px`,
             height: `${props.height}px`,
@@ -128,7 +109,7 @@ const VueVirtualized = defineComponent({
               height: `${itemsTop.value[itemsTop.value.length - 1]}px`,
             }}
           >
-            {renderItems()}
+            {renderItems(listTop.value)}
           </div>
         </div>
       );

@@ -20,7 +20,8 @@ Usage is similar to react-window, there are some differentia:
 1. vue-virtualized only support vue3, using jsx grammar.
 2. vue-virtualized only support virtualize list, not support virtualize table.
 3. vue-virtualized use renderItem function to render list items.
-4. vue-virtualized use renderCount to determine if list updates are needed.
+4. vue-virtualized use reRenderCount to determine if list updates are needed.
+5. vue-virtualized use preRenderPageCount to control the number of pre-rendered pages.
 
 ### example
 
@@ -50,8 +51,8 @@ import List from "vue-virtualized";
 interface IProps {
   width: number;
   height: number;
-  itemCount: number | (() => number);
-  itemSize: number | ((index: number) => number);
+  itemCount: number;
+  itemSize: (index: number) => number;
   renderItem: (params: { index: number; style: CSSProperties }) => JSX.Element;
   reRenderCount?: number;
   preRenderPageCount?: number;
