@@ -1,7 +1,14 @@
 # vue-virtualized
+
 [中文文档](https://github.com/junqiuzhang/vue-virtualized/blob/master/README_zh-CN.md)
 
 vue-virtualized is a virtual rendering library like react-window.
+
+## Feature
+
+1. vue-virtualized is lightweight, only 100 lines of code, 2 KB in size.
+2. vue-virtualized has very good performance.
+3. vue-virtualized is written using vue3 composition api, full support for typescript
 
 ## Install
 

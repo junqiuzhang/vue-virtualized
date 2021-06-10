@@ -2,6 +2,12 @@
 
 vue-virtualized 是一个虚拟化渲染的库，类似于 react-window
 
+## 特点
+
+1. vue-virtualized 更轻量，共 100 行代码，体积仅有 2 KB
+2. vue-virtualized 有非常好的性能
+3. vue-virtualized 使用 vue3 的 composition api 编写，全面支持 typescript
+
 ## 安装
 
 ```
