@@ -1,6 +1,6 @@
 {
   "name": "vue-virtualized",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "vue virtualized render",
   "files": [
     "dist"
