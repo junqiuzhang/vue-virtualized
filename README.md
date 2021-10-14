@@ -30,7 +30,7 @@ See example for usage, there are some announcements:
 4. vue-virtualized use reRenderCount to determine if list updates are needed.
 5. vue-virtualized use preRenderPageCount to control the number of pre-rendered pages.
 
-### example
+### Example
 
 ```tsx
 import List from "vue-virtualized";
@@ -52,7 +52,7 @@ import List from "vue-virtualized";
 />;
 ```
 
-### interface
+### Interface
 
 ```ts
 interface IProps {
